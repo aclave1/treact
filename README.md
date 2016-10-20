@@ -19,10 +19,10 @@ There's no minified dist version currently. Feel free to submit a PR.
 
 Here are some contrived examples which highlight various features
 
-Some real world examples:
+Some real world use cases:
 
-- [] building a file explorer using custom templates and callbacks
-- [] building a context menu using custom templates and callbacks
+- building a file explorer
+- building a context menu
 
 # Api
 
@@ -30,20 +30,28 @@ Some real world examples:
 
 Props api:
 
-	* `tree` (required): array of tree node data
-	* `isFlat`:if the tree node data is "flat"(a 1 dimensional array of nodes), the array will be converted into tree form
-	* `getters`: overridecallbacks used to retrieve node properties. Use these to override the schema of your nodes.
-	* `callbacks` : callbacks to indicate node events
-	* `classNames`:a map of custom classnames to override defaults
-	* `template`: custom per-node template function
-	* `indicators` : override default opened and closed indicators
+
+* tree (required): array of tree node data	 
+
+* isFlat: if the tree node data is "flat"(a 1 dimensional array of nodes), the array will be converted into tree form
+	 
+* getters: overridecallbacks used to retrieve node properties. Use these to override the schema of your nodes.
+	 
+* callbacks: callbacks to indicate node events
+	 
+* classNames: a map of custom classnames to override defaults
+	 
+* template: custom per-node template function
+
+* indicators: override default opened and closed indicators
 
 ### `tree`
-	The array of tree node data. This can be specified in 2 formats. 
+
+The array of tree node data. This can be specified in 2 formats. 
 
 **Flat array**
 
-	The simplest format is a flat array of nodes. Here is an example of an array of tree nodes with the default node schema:
+The simplest format is a flat array of nodes. Here is an example of an array of tree nodes with the default node schema:
 
 	```
 	var nodes = [
@@ -58,7 +66,7 @@ In the default schema, it is assumed that each node specifies a unique id, their
 
 **Nested array**
 
-	A pre-built tree can also be accepted. Here is an example of a using a prebuilt tree:
+A pre-built tree can also be accepted. Here is an example of a using a prebuilt tree:
 
 	```
 	var nodes = [{
