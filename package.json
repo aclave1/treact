@@ -1,0 +1,36 @@
+{
+  "name": "scopic-react-tree",
+  "version": "1.0.0",
+  "description": "A react tree component",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require babel-core/register --recursive test/"
+  },
+  "author": "Alex Clavelle",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.3.2"
+  },
+  "peerDependencies":{
+    "react": "^15.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "chai": "^3.4.1",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.13.1",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.1.1",
+    "gulp-mocha": "^2.2.0",
+    "jsx-chai": "^4.0.0",
+    "lodash": "^4.16.4",
+    "mocha": "^2.3.4",
+    "react-addons-test-utils": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.12.9"
+  }
+}
