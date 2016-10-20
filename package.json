@@ -1,16 +1,17 @@
 {
-  "name": "scopic-react-tree",
+  "name": "treact",
   "version": "1.0.0",
   "description": "A react tree component",
   "main": "index.js",
   "scripts": {
     "test": "mocha --require babel-core/register --recursive test/"
   },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/aclave1/treact"
+  },
   "author": "Alex Clavelle",
   "license": "MIT",
-  "dependencies": {
-    "react": "^15.3.2"
-  },
   "peerDependencies": {
     "react": "^15.3.2",
     "react-dom": "^15.3.2"

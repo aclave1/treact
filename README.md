@@ -30,20 +30,13 @@ Some real world use cases:
 
 Props api:
 
-
-* tree (required): array of tree node data	 
-
-* isFlat: if the tree node data is "flat"(a 1 dimensional array of nodes), the array will be converted into tree form
-	 
-* getters: overridecallbacks used to retrieve node properties. Use these to override the schema of your nodes.
-	 
-* callbacks: callbacks to indicate node events
-	 
-* classNames: a map of custom classnames to override defaults
-	 
-* template: custom per-node template function
-
-* indicators: override default opened and closed indicators
+* `tree` (required): array of tree node data
+* `isFlat`:if the tree node data is "flat"(a 1 dimensional array of nodes), the array will be converted into tree form
+* `getters`: overridecallbacks used to retrieve node properties. Use these to override the schema of your nodes.
+* `callbacks` : callbacks to indicate node events
+* `classNames`:a map of custom classnames to override defaults
+* `template`: custom per-node template function
+* `indicators` : override default opened and closed indicators
 
 ### `tree`
 
@@ -53,14 +46,14 @@ The array of tree node data. This can be specified in 2 formats.
 
 The simplest format is a flat array of nodes. Here is an example of an array of tree nodes with the default node schema:
 
-	```
-	var nodes = [
-		{id:1,contents:'1',parent:null},
-		{id:2,contents:'2',parent:1},
-		{id:3,contents:'3',parent:1},
-	];
-	<TreeView tree={nodes}/>
-	```
+```
+var nodes = [
+	{id:1,contents:'1',parent:null},
+	{id:2,contents:'2',parent:1},
+	{id:3,contents:'3',parent:1},
+];
+<TreeView tree={nodes}/>
+```
 
 In the default schema, it is assumed that each node specifies a unique id, their parent, and their contents. Nodes with null/undefined parents are considered root nodes.
 
@@ -68,8 +61,12 @@ In the default schema, it is assumed that each node specifies a unique id, their
 
 A pre-built tree can also be accepted. Here is an example of a using a prebuilt tree:
 
-	```
-	var nodes = [{
+```
+var nodes = getNodes();
+<TreeView tree={nodes} isFlat={false}/>
+
+function getNodes(){
+	return [{
 		"id": 1,
 		"contents": "1",
 		"parent": null,
@@ -110,9 +107,9 @@ A pre-built tree can also be accepted. Here is an example of a using a prebuilt 
 			"children": []
 		}]
 	}];
+}
 
-	<TreeView tree={nodes} isFlat={false}/>
-	```
+```
 
 TreeView also provides the helper function `arrayToTree` which converts a flat node array into a tree.
 
@@ -144,11 +141,11 @@ and use Treact exactly the same.
 
 Here is a full list of the default getters
 
-	* id:unique id of the node
-	* contents:what to render in the node
-	* parent:node to nest current node under
-	* children:nodes nested under this node
-	* isOpen:whether the node is showing its children or not
+* `id`: unique id of the node
+* `contents`: what to render in the node
+* `parent`: node to nest current node under
+* `children`: nodes nested under this node
+* `isOpen`: whether the node is showing its children or not
 
 and the code for them:
 
@@ -167,15 +164,15 @@ const defaultGetters = {
 
 The only callback available currently is `nodeToggled`. Here is an example of using it:
 ```
-	const callbacks = {
-	    nodeToggled:(node)=>console.dir(node);
-	};
-	var nodes = [
-		{id:1,contents:'1',parent:null},
-		{id:2,contents:'2',parent:1},
-		{id:3,contents:'3',parent:1},
-	];
-	<TreeView tree={nodes} callbacks={callbacks}/>
+const callbacks = {
+    nodeToggled:(node)=>console.dir(node);
+};
+var nodes = [
+	{id:1,contents:'1',parent:null},
+	{id:2,contents:'2',parent:1},
+	{id:3,contents:'3',parent:1},
+];
+<TreeView tree={nodes} callbacks={callbacks}/>
 ```
 
 ### `indicators`
@@ -216,5 +213,4 @@ var template = (node)=>(<div><p>node.contents</p><img src={node.imgsrc} alt={nod
 
 <TreeView tree={nodes} indicators={customJSXIcons} template={template}/>
 ```
-
-Note template is expecting a function which returns a react view. You can use this feature to dynamically compute your node template based on the properties of your nodes.
+Note: template is expecting a function which returns a react view. You can use this feature to dynamically compute your node template based on the properties of your nodes.
