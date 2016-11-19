@@ -4,7 +4,7 @@ import chai,{expect} from 'chai';
 import jsxChai from 'jsx-chai';
 chai.use(jsxChai);
 
-import TreeView,{arrayToTree,TreeIndicator,TreeNode,defaultClassNames,defaultGetters,defaultCallbacks} from '../index';
+import TreeView,{arrayToTree,TreeIndicator,TreeNode,defaultClassNames,defaultGetters,defaultCallbacks} from '../src';
 
 const sortById = (a,b)=>a.id-b.id;
 

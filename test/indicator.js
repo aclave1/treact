@@ -4,7 +4,7 @@ import chai,{expect} from 'chai';
 import jsxChai from 'jsx-chai';
 chai.use(jsxChai);
 
-import {TreeIndicator,defaultClassNames,defaultGetters,defaultCallbacks} from '../index';
+import {TreeIndicator,defaultClassNames,defaultGetters,defaultCallbacks} from '../src';
 
 
 const noop = ()=>{};
