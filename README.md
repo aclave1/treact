@@ -10,7 +10,7 @@
 Just call 
 
 ```
-import TreeView from 'scopic-react-tree';
+import TreeView from 'treact';
 ```
 
 There's no minified dist version currently. Feel free to submit a PR.
