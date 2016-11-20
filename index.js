@@ -24,7 +24,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var noop = function noop() {};
-
 var undef = function undef(x) {
     return typeof x === 'undefined';
 };
@@ -71,7 +70,8 @@ var defaultClassNames = exports.defaultClassNames = {
 };
 
 var defaultCallbacks = exports.defaultCallbacks = {
-    nodeToggled: noop
+    nodeToggled: noop,
+    nodeClicked: noop
 };
 
 var TreeView = function (_Component) {
@@ -147,6 +147,7 @@ var TreeNode = exports.TreeNode = function TreeNode(props) {
     var actions = treeProps.actions;
     var classNames = treeProps.classNames;
     var getters = treeProps.getters;
+    var callbacks = treeProps.callbacks;
 
 
     var isOpened = actions.isOpen(getters.id(node)) || getters.isOpen(node);
@@ -160,7 +161,13 @@ var TreeNode = exports.TreeNode = function TreeNode(props) {
             'span',
             { className: classNames.node },
             _react2.default.createElement(TreeIndicator, { opened: isOpened, leaf: !hasChildren, node: node, treeProps: props.treeProps }),
-            !undef(treeProps.template) ? treeProps.template(node) : renderNodeContents(node, getters.contents(node))
+            _react2.default.createElement(
+                'span',
+                { onClick: function onClick() {
+                        return callbacks.nodeClicked(node);
+                    } },
+                !undef(treeProps.template) ? treeProps.template(node) : renderNodeContents(node, getters.contents(node))
+            )
         ),
         _react2.default.createElement(
             'div',
@@ -175,11 +182,10 @@ var TreeNode = exports.TreeNode = function TreeNode(props) {
 var TreeIndicator = exports.TreeIndicator = function TreeIndicator(props) {
     var treeProps = props.treeProps;
     var node = props.node;
-    //console.dir(treeProps);
-
     var actions = treeProps.actions;
     var classNames = treeProps.classNames;
     var getters = treeProps.getters;
+    var callbacks = treeProps.callbacks;
     //let the user define custom indicators or use our own:
 
     var indicator = classNames.indicator;
@@ -192,13 +198,13 @@ var TreeIndicator = exports.TreeIndicator = function TreeIndicator(props) {
         return _react2.default.createElement(
             'div',
             { onClick: function onClick() {
-                    return actions.toggleNode(getters.id(node));
+                    return actions.toggleNode(getters.id(node), node, callbacks);
                 }, style: { display: props.leaf ? 'none' : 'inline-block' } },
             props.opened ? treeProps.indicators.opened : treeProps.indicators.closed
         );
     }
     return _react2.default.createElement('div', { onClick: function onClick() {
-            return actions.toggleNode(getters.id(node));
+            return actions.toggleNode(getters.id(node), node);
         }, className: className, style: { display: props.leaf ? 'none' : 'inline-block' } });
 };
 
@@ -263,9 +269,11 @@ function buildActions(component) {
     var isOpen = function isOpen(id) {
         return component.state.openedMap[id] === true;
     };
-    var toggleNode = function toggleNode(id) {
+    var toggleNode = function toggleNode(id, node) {
         component.setState({
             openedMap: _extends({}, component.state.openedMap, _defineProperty({}, id, !isOpen(id)))
+        }, function () {
+            component.props.callbacks.nodeToggled(node);
         });
     };
     return {
@@ -278,7 +286,7 @@ function styleTag(classNames) {
     return _react2.default.createElement(
         'style',
         null,
-        '\n                .' + classNames.children + '{\n                    padding-left:10px;\n                }\n                .' + classNames.indicator + '{\n                    margin-right:5px;\n                    width: 0;\n                    height: 0;\n                    border-style: solid;\n                    border-width: 5px 0 5px 8.7px;\n                    border-color: transparent transparent transparent #000000;\n                }\n                .' + classNames.indicator + ':hover{\n                    cursor:pointer;\n                }\n                .' + classNames.node + ':hover{\n                    background-color:#ccc;\n                    cursor:default;\n                }\n                .' + classNames.indicatorOpen + '{\n                   transform:rotate(90deg);\n                }\n                .' + classNames.indicatorClosed + '{\n                }\n                '
+        '\n                .' + classNames.children + '{\n                    padding-left:10px;\n                }\n                .' + classNames.indicator + '{\n                    margin-right:5px;\n                    width: 0;\n                    height: 0;\n                    border-style: solid;\n                    border-width: 5px 0 5px 8.7px;\n                    border-color: transparent transparent transparent #000000;\n                }\n                .' + classNames.indicator + ':hover{\n                    cursor:pointer;\n                }\n                .' + classNames.node + ':hover{\n                    background-color:#ccc;\n                    cursor:pointer;\n                }\n                .' + classNames.indicatorOpen + '{\n                   transform:rotate(90deg);\n                }\n                .' + classNames.indicatorClosed + '{\n                }\n                '
     );
 }
 

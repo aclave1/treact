@@ -64,7 +64,8 @@ indicators: override the default indicators. Pass {open:openjsx,closed:closedjsx
 
 const getters = {};
 const callbacks = {
-    nodeToggled:(node)=>console.dir(node)
+    nodeToggled:(node)=>console.dir(node),
+    nodeClicked:(node)=>console.log(`node clicked: ${node.id}`)
 };
 
 //custom icon can either be two discrete icons, one for the open and one for the closed state, or it can be a single icon which represents the closed state and will be rotated 90 degrees to form the opened state.
@@ -74,4 +75,14 @@ const customIcons = {
 };
 
 const customIcon = <span>{">"}</span>
-ReactDom.render(<TreeView tree={arrayToTree(flatTree)} getters={getters} callbacks={callbacks} />,document.getElementById('react-container'));
+ReactDom.render(
+    <div>    
+        <TreeView tree={sampleTree} getters={getters} callbacks={callbacks} />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <TreeView tree={arrayToTree(flatTree)} getters={getters} callbacks={callbacks} />
+    </div>
+
+,document.getElementById('react-container'));

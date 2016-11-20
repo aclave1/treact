@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 const noop = ()=>{};
-
 const undef = (x)=>typeof x === 'undefined';
 const undefOrNull = (x)=>typeof x === 'undefined' || x === null;
 
@@ -30,7 +29,8 @@ export const defaultClassNames = {
 };
 
 export const defaultCallbacks = {
-    nodeToggled:noop
+    nodeToggled:noop,
+    nodeClicked:noop
 };
 export default class TreeView extends Component{
     constructor(){
@@ -79,18 +79,19 @@ let renderNodeContents = (node,contents)=> typeof contents === 'function' ? cont
 
 export const TreeNode = (props)=>{
     const {node,treeProps} = props; 
-    const {actions,classNames,getters} = treeProps;
+    const {actions, classNames, getters, callbacks} = treeProps;
 
     const isOpened = actions.isOpen(getters.id(node)) || getters.isOpen(node);
     let children = !undef(getters.children(node)) ? getters.children(node) : [];//if the node is missing the children property, just skip it
     const hasChildren = children.length > 0;
 
-
     return (
-        <div className={combineClassNames(classNames.tree,hasChildren ? classNames.treeActive : '')}>
+        <div className={combineClassNames(classNames.tree, hasChildren ? classNames.treeActive : '')}>
             <span className={classNames.node}>
                 <TreeIndicator opened={isOpened} leaf={!hasChildren} node={node} treeProps={props.treeProps}/>
-                {!undef(treeProps.template) ? treeProps.template(node) : renderNodeContents(node,getters.contents(node))}
+                <span onClick={() => callbacks.nodeClicked(node)}>                
+                    {!undef(treeProps.template) ? treeProps.template(node) : renderNodeContents(node,getters.contents(node))}
+                </span>
             </span>
             <div style={{display:isOpened ? 'block' : 'none'}} className={classNames.children}>
                 {children.map(child=> <TreeNode key={getters.id(child)} node={child} treeProps={props.treeProps}/>)}
@@ -99,20 +100,17 @@ export const TreeNode = (props)=>{
     );
 };
 
-
-
 export const TreeIndicator = (props)=>{
-    const {treeProps,node} = props;
-    //console.dir(treeProps);
-    const {actions,classNames,getters} = treeProps;
+    const {treeProps, node} = props;
+    const {actions, classNames, getters, callbacks} = treeProps;
     //let the user define custom indicators or use our own:
     const {indicator,indicatorOpen,indicatorClosed} = classNames;
     const className = combineClassNames(indicator, props.opened ? indicatorOpen : indicatorClosed);
     const useCustomTemplate = !undef(treeProps.indicators.opened) && !undef(treeProps.indicators.closed); 
     if(useCustomTemplate){
-        return <div onClick={()=>actions.toggleNode(getters.id(node))} style={{display:props.leaf ? 'none' : 'inline-block'}}>{props.opened ? treeProps.indicators.opened : treeProps.indicators.closed}</div>;
+        return <div onClick={()=>actions.toggleNode(getters.id(node), node, callbacks)} style={{display:props.leaf ? 'none' : 'inline-block'}}>{props.opened ? treeProps.indicators.opened : treeProps.indicators.closed}</div>;
     }
-    return (<div onClick={()=>actions.toggleNode(getters.id(node))} className={className} style={{display:props.leaf ? 'none' : 'inline-block'}}></div>);
+    return (<div onClick={()=>actions.toggleNode(getters.id(node), node)} className={className} style={{display:props.leaf ? 'none' : 'inline-block'}}></div>);
 };
 
 //converts a flat array to a tree compatible with treeact
@@ -170,12 +168,14 @@ function buildActions(component){
     const isOpen = (id)=>{
         return component.state.openedMap[id] === true;
     };
-    const toggleNode = (id)=>{
+    const toggleNode = (id, node)=>{
         component.setState({
             openedMap:{
                 ...component.state.openedMap,
                 ...{[id]:!isOpen(id)}
             }
+        }, function(){
+            component.props.callbacks.nodeToggled(node);
         });
     };
     return {
@@ -205,7 +205,7 @@ function styleTag(classNames){
                 }
                 .${classNames.node}:hover{
                     background-color:#ccc;
-                    cursor:default;
+                    cursor:pointer;
                 }
                 .${classNames.indicatorOpen}{
                    transform:rotate(90deg);
