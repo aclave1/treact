@@ -112,7 +112,7 @@ describe('A Tree Node',()=>{
             <div className={defaultClassNames.tree}>
                 <span className={defaultClassNames.node}>
                     <TreeIndicator opened={false} leaf={true} treeProps={defaultTreeProps} node={node}/>
-                    {'contents 1'}
+                    <span onClick={()=>{}}>{'contents 1'}</span>
                 </span>
                 <div className={defaultClassNames.children} style={{display:'none'}}>
                 </div>
@@ -136,7 +136,7 @@ describe('A Tree Node',()=>{
             <div className={'tree tree-node-is-active'}>
                 <span className={defaultClassNames.node}>
                     <TreeIndicator opened={false} leaf={false} treeProps={defaultTreeProps} node={node}/>
-                    {'contents 1'}
+                    <span onClick={()=>{}}>{'contents 1'}</span>
                 </span>
                 <div className={defaultClassNames.children} style={{display:'none'}}>
                     <TreeNode key={child.id} node={child} treeProps={defaultTreeProps} />
@@ -158,7 +158,7 @@ describe('A Tree Node',()=>{
             <div className={'tree'}>
                 <span className={defaultClassNames.node}>
                     <TreeIndicator opened={false} leaf={true} treeProps={defaultTreeProps} node={node}/>
-                    {'contents 1'}
+                    <span onClick={()=>{}}>{'contents 1'}</span>
                 </span>
                 <div className={defaultClassNames.children} style={{display:'none'}}>
                 </div>
@@ -177,7 +177,7 @@ describe('A Tree Node',()=>{
             <div className={'tree'}>
                 <span className={defaultClassNames.node}>
                     <TreeIndicator opened={false} leaf={true} treeProps={defaultTreeProps} node={node}/>
-                    {'contents 1'}
+                    <span onClick={()=>{}}>{'contents 1'}</span>
                 </span>
                 <div className={defaultClassNames.children} style={{display:'none'}}>
                 </div>
@@ -217,7 +217,7 @@ describe('A Tree Node',()=>{
             <div className={'tree tree-node-is-active'}>
                 <span className={defaultClassNames.node}>
                     <TreeIndicator opened={false} leaf={false} treeProps={treeProps} node={node}/>
-                    {'contents 1'}
+                    <span onClick={()=>{}}>{'contents 1'}</span>
                 </span>
                 <div className={defaultClassNames.children} style={{display:'none'}}>
                     <TreeNode key={child.identifier} node={child} treeProps={treeProps} />

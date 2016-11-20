@@ -62,8 +62,7 @@ export default class TreeView extends Component{
 TreeView.getDefaultClassNames = ()=>defaultClassNames;
 
 //traverse a tree and apply cb to each (node,parent) pair
-TreeView.traverseTree = (tree,cb,_getters = {})=>{
-    //const getters = {...defaultGetters,..._getters};
+TreeView.traverseTree = (tree, cb, _getters = {})=>{
     throw new Error('not implemented');
 };
 
@@ -72,15 +71,10 @@ TreeView.mapTree = (tree,cb,_getters = {})=>{
     throw new Error('not implemented');
 };
 
-
-
-
 let renderNodeContents = (node,contents)=> typeof contents === 'function' ? contents(node) : contents;
-
 export const TreeNode = (props)=>{
     const {node,treeProps} = props; 
     const {actions, classNames, getters, callbacks} = treeProps;
-
     const isOpened = actions.isOpen(getters.id(node)) || getters.isOpen(node);
     let children = !undef(getters.children(node)) ? getters.children(node) : [];//if the node is missing the children property, just skip it
     const hasChildren = children.length > 0;
@@ -90,7 +84,7 @@ export const TreeNode = (props)=>{
             <span className={classNames.node}>
                 <TreeIndicator opened={isOpened} leaf={!hasChildren} node={node} treeProps={props.treeProps}/>
                 <span onClick={() => callbacks.nodeClicked(node)}>                
-                    {!undef(treeProps.template) ? treeProps.template(node) : renderNodeContents(node,getters.contents(node))}
+                    {!undef(treeProps.template) ? treeProps.template(node) : renderNodeContents(node, getters.contents(node))}
                 </span>
             </span>
             <div style={{display:isOpened ? 'block' : 'none'}} className={classNames.children}>
@@ -104,7 +98,7 @@ export const TreeIndicator = (props)=>{
     const {treeProps, node} = props;
     const {actions, classNames, getters, callbacks} = treeProps;
     //let the user define custom indicators or use our own:
-    const {indicator,indicatorOpen,indicatorClosed} = classNames;
+    const {indicator, indicatorOpen, indicatorClosed} = classNames;
     const className = combineClassNames(indicator, props.opened ? indicatorOpen : indicatorClosed);
     const useCustomTemplate = !undef(treeProps.indicators.opened) && !undef(treeProps.indicators.closed); 
     if(useCustomTemplate){
@@ -114,23 +108,23 @@ export const TreeIndicator = (props)=>{
 };
 
 //converts a flat array to a tree compatible with treeact
-export const arrayToTree = (_array,_getters = {},_setters={})=>{
-    const getters = {...defaultGetters,..._getters};
-    const setters = {...defaultSetters,..._setters};
+export const arrayToTree = (_array, _getters = {}, _setters={}) => {
+    const getters = {...defaultGetters, ..._getters};
+    const setters = {...defaultSetters, ..._setters};
 
     const tree = [];
     const map = {};//hash table used to speed up element lookup during tree building.
     const array = _array.slice();//make a copy of the array to avoid modifying it.
 
-    const addToParentAndMap = (el)=>{
+    const addToParentAndMap = (el) => {
         const parentId = getters.parent(el);
         const parentNode = map[parentId];
         setters.addChild(map[parentId],el,getters);
         map[getters.id(el)] = el;
     };
-    const parentMapped = (node)=> !undef(map[getters.parent(node)]);
+    const parentMapped = (node) => !undef(map[getters.parent(node)]);
 
-    for(var i=0;i<array.length;i++){
+    for(var i=0; i<array.length; i++){
         let node = array[i];
         let removeElement = false;//if the element is a root element, or if its parent is already in the map, remove it from the array
         //ensure that every node has the children property
@@ -146,7 +140,7 @@ export const arrayToTree = (_array,_getters = {},_setters={})=>{
         }
 
         if(removeElement){
-            array.splice(i,1);
+            array.splice(i, 1);
             /**reassign i because splice modifies the length of the array, causing elements to be skipped.
                counting backwards would fix this, but reverse the sort order and I don't want to force the user to re-sort their data after using this.
             */
@@ -194,11 +188,11 @@ function styleTag(classNames){
                 }
                 .${classNames.indicator}{
                     margin-right:5px;
-                    width: 0;
-                    height: 0;
-                    border-style: solid;
-                    border-width: 5px 0 5px 8.7px;
-                    border-color: transparent transparent transparent #000000;
+                    width:0;
+                    height:0;
+                    border-style:solid;
+                    border-width:5px 0 5px 8.7px;
+                    border-color:transparent transparent transparent #000000;
                 }
                 .${classNames.indicator}:hover{
                     cursor:pointer;
@@ -219,5 +213,5 @@ function styleTag(classNames){
 }
 
 function combineClassNames(){
-    return [].filter.call(arguments,arg=>arg.trim() !== '').join(' ');
+    return [].filter.call(arguments, arg => arg.trim() !== '').join(' ');
 }

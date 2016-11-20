@@ -46,7 +46,7 @@ describe('Node templates',()=>{
         <div className={'tree tree-node-is-active'}>
             <span className={defaultClassNames.node}>
                 <TreeIndicator opened={false} leaf={false} treeProps={defaultTreeProps} node={node}/>
-                {'contents 1'}
+                <span onClick={()=>{}}>{'contents 1'}</span>
             </span>
             <div className={defaultClassNames.children} style={{display:'none'}}>
                 <TreeNode key={child.id} node={child} treeProps={defaultTreeProps} />
@@ -72,7 +72,7 @@ describe('Node templates',()=>{
         <div className={'tree tree-node-is-active'}>
             <span className={defaultClassNames.node}>
                 <TreeIndicator opened={false} leaf={false} treeProps={defaultTreeProps} node={node}/>
-                {100}
+                <span onClick={()=>{}}>{100}</span>
             </span>
             <div className={defaultClassNames.children} style={{display:'none'}}>
                 <TreeNode key={child.id} node={child} treeProps={defaultTreeProps} />
@@ -98,7 +98,7 @@ describe('Node templates',()=>{
       <div className={'tree tree-node-is-active'}>
           <span className={defaultClassNames.node}>
               <TreeIndicator opened={false} leaf={false} treeProps={defaultTreeProps} node={node}/>
-              <span>custom jsx 1</span>
+              <span onClick={()=>{}}><span>custom jsx 1</span></span>
           </span>
           <div className={defaultClassNames.children} style={{display:'none'}}>
               <TreeNode key={child.id} node={child} treeProps={defaultTreeProps} />
@@ -125,7 +125,7 @@ describe('Node templates',()=>{
         <div className={'tree tree-node-is-active'}>
             <span className={defaultClassNames.node}>
                 <TreeIndicator opened={false} leaf={false} treeProps={defaultTreeProps} node={node}/>
-                <span>my property</span>
+                <span onClick={()=>{}}><span>my property</span></span>
             </span>
             <div className={defaultClassNames.children} style={{display:'none'}}>
                 <TreeNode key={child.id} node={child} treeProps={defaultTreeProps} />
@@ -157,7 +157,7 @@ describe('Node templates',()=>{
       <div className={'tree tree-node-is-active'}>
           <span className={defaultClassNames.node}>
               <TreeIndicator opened={false} leaf={false} treeProps={treeProps} node={node}/>
-              <div id={node.id}>{node.id} {node.contents}</div>
+              <span onClick={()=>{}}><div id={node.id}>{node.id} {node.contents}</div></span>
           </span>
           <div className={defaultClassNames.children} style={{display:'none'}}>
               <TreeNode key={child.id} node={child} treeProps={treeProps} />

@@ -311,7 +311,6 @@
 	TreeView.traverseTree = function (tree, cb) {
 	    var _getters = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-	    //const getters = {...defaultGetters,..._getters};
 	    throw new Error('not implemented');
 	};
 
@@ -325,7 +324,6 @@
 	var renderNodeContents = function renderNodeContents(node, contents) {
 	    return typeof contents === 'function' ? contents(node) : contents;
 	};
-
 	var TreeNode = exports.TreeNode = function TreeNode(props) {
 	    var node = props.node;
 	    var treeProps = props.treeProps;
@@ -445,7 +443,7 @@
 	}
 
 	function styleTag(classNames) {
-	    return _react2.default.createElement('style', null, '\n                .' + classNames.children + '{\n                    padding-left:10px;\n                }\n                .' + classNames.indicator + '{\n                    margin-right:5px;\n                    width: 0;\n                    height: 0;\n                    border-style: solid;\n                    border-width: 5px 0 5px 8.7px;\n                    border-color: transparent transparent transparent #000000;\n                }\n                .' + classNames.indicator + ':hover{\n                    cursor:pointer;\n                }\n                .' + classNames.node + ':hover{\n                    background-color:#ccc;\n                    cursor:pointer;\n                }\n                .' + classNames.indicatorOpen + '{\n                   transform:rotate(90deg);\n                }\n                .' + classNames.indicatorClosed + '{\n                }\n                ');
+	    return _react2.default.createElement('style', null, '\n                .' + classNames.children + '{\n                    padding-left:10px;\n                }\n                .' + classNames.indicator + '{\n                    margin-right:5px;\n                    width:0;\n                    height:0;\n                    border-style:solid;\n                    border-width:5px 0 5px 8.7px;\n                    border-color:transparent transparent transparent #000000;\n                }\n                .' + classNames.indicator + ':hover{\n                    cursor:pointer;\n                }\n                .' + classNames.node + ':hover{\n                    background-color:#ccc;\n                    cursor:pointer;\n                }\n                .' + classNames.indicatorOpen + '{\n                   transform:rotate(90deg);\n                }\n                .' + classNames.indicatorClosed + '{\n                }\n                ');
 	}
 
 	function combineClassNames() {
